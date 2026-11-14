@@ -13,6 +13,8 @@ RUN GO111MODULE=on GOPROXY=https://proxy.golang.org go mod download
 
 COPY . .
 
+RUN go test ./...
+
 RUN make build
 
 # Create a minimal container to run a Golang static binary
@@ -23,4 +25,4 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /go/whoami/whoami .
 
 ENTRYPOINT ["/whoami"]
-EXPOSE 80
+EXPOSE 8080
